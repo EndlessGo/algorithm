@@ -1,2 +1,3 @@
 # algorithm
-algorithm introduce and code implementation
+Algorithm introduce and code implementation.
+Use VS2015.
