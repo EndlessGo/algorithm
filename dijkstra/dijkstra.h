@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <iostream>
-#include "stdlib.h"
 
 struct MGraph
 {
@@ -11,6 +10,7 @@ struct MGraph
 
 void Dijkstra(int v0, const MGraph& graph, std::vector<int>& shortestPath, std::vector<int>& parentNode)
 {	
+	//time O(n^2), space O(n)
 	//忽略了一些合法性检测，专注D算法逻辑本身
 	
 	//初始化v0到其他点的最短路径
@@ -34,7 +34,7 @@ void Dijkstra(int v0, const MGraph& graph, std::vector<int>& shortestPath, std::
 	for (int visitedNum = 1; visitedNum < graph.vertexNum; ++visitedNum)
 	{
 		//找本轮中最短路径和对应节点
-		int vMin = 0, minD = INT_MAX;
+		int vMin = -1, minD = INT_MAX;
 		for (int v = 0; v < graph.vertexNum; ++v)
 		{
 			if (!visited[v] && shortestPath[v] < minD)
@@ -43,7 +43,8 @@ void Dijkstra(int v0, const MGraph& graph, std::vector<int>& shortestPath, std::
 				minD = shortestPath[v];
 			}
 		}
-		//if (minD == INT_MAX) return;//无向图应该能这么做，有向图需要遍历完
+		//if (minD == INT_MAX) continue;//当前节点无法被访问到
+		if (vMin == -1) continue;//当前节点无法被访问到，这两种判断都可以
 		visited[vMin] = true;
 		//对于未被访问过的节点，判断当前最短路径是否能被经过vMin后的路径更新
 		for (int v = 0; v < graph.vertexNum; ++v)
